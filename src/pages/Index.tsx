@@ -1,12 +1,42 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+
+import { useEffect } from 'react';
+import Navbar from '@/components/Navbar';
+import Hero from '@/components/Hero';
+import TopPodcastSection from '@/components/TopPodcastSection';
+import Footer from '@/components/Footer';
 
 const Index = () => {
+  useEffect(() => {
+    // Scroll reveal animation
+    const revealElements = document.querySelectorAll('.reveal-animation');
+    
+    const revealScroll = () => {
+      for (let i = 0; i < revealElements.length; i++) {
+        const element = revealElements[i];
+        const revealPoint = 150;
+        const windowHeight = window.innerHeight;
+        const elementTop = element.getBoundingClientRect().top;
+        
+        if (elementTop < windowHeight - revealPoint) {
+          element.classList.add('revealed');
+        }
+      }
+    };
+    
+    window.addEventListener('scroll', revealScroll);
+    revealScroll(); // Initial check on load
+    
+    return () => window.removeEventListener('scroll', revealScroll);
+  }, []);
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-gray-600">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-white overflow-hidden">
+      <Navbar />
+      <main>
+        <Hero />
+        <TopPodcastSection />
+      </main>
+      <Footer />
     </div>
   );
 };
